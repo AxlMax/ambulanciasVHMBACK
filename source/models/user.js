@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default : []
     },
+    id_gps :{
+        type : Array,
+        default : []
+    },
     created: { 
         type: Date, 
         default: Date.now 
