@@ -9,7 +9,13 @@ const dbConnect = () => {
     }
     */
 
-    const DB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_INFO}/${process.env.DB_NAME}`;
+    let DB_URI  = ""
+
+    if(process.env.LOCAL == "true"){
+        DB_URI = `mongodb://localhost:27017/${process.env.DB_NAME}`
+    }else{
+        DB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_INFO}/${process.env.DB_NAME}`;
+    }
     //const DB_URI = process.env.DB_URI;
     
     // variable para definir la condicion de entrada a la base de datos
