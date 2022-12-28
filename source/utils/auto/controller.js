@@ -5,6 +5,10 @@ const ERRORMSG = "error CONTROLADOR"
 const create = (args) => {
     const {model, body, res} = args
 
+    if(process.env.LOG == 'true'){
+        console.log(`Create ${body}`)
+    }
+
     const document = new model(body)
     Error.errorSaving(document, res)
 
@@ -15,6 +19,7 @@ const find = (args) => {
     console.log(id)
     model.findById(id,(err, doc) => {Error.errorHandler(err, res, ERRORMSG, doc)})
 }
+
 
 const Update = (args) => {
     const {model, body, id, res , msg} = args
@@ -27,6 +32,10 @@ const Update = (args) => {
 
 const Delete = (args) => {
     const {model, id, res, key,msg} = args
+
+    if(process.env.LOG == 'true'){
+        console.log(`Delete ${id} ${key}`)
+    }
     
     model.findById(id, (error, doc) => {
         doc['relation'].map((value, index) => {
@@ -91,6 +100,10 @@ const Delete = (args) => {
 
 const Link = (args) => {
     const {model, idc, idl, key, res} = args
+
+    if(process.env.LOG == 'true'){
+        console.log(`Link ${idc} ${key}`)
+    }
     
     model.findById(idc, (error, doc) => {
         doc?.[key].push(idl)
@@ -109,25 +122,32 @@ const Link = (args) => {
  */
 
 const Rlink = (args) => {
+
     const {idc, modelc, modell, keyc, res} = args
 
-    console.log("asasa")
+    if(process.env.LOG == 'true'){
+        console.log(`Rlink ${idc} ${keyc}`)
+    }
 
     modelc.findById(idc, (error, doc) => {
     
         const idKeys = doc?.[keyc]
+
         let resolveKeys = []
 
-            idKeys.map(async(v, i) => {
-                const data =  await modell.findById(v)
-                resolveKeys.push(data)
-                
-
-                if(resolveKeys.length == idKeys.length){
-                    res.send(200, resolveKeys)
-                }
-            })
-
+            if(idKeys){
+                idKeys.map(async(v, i) => {
+                    const data =  await modell.findById(v)
+                    resolveKeys.push(data)
+                    
+    
+                    if(resolveKeys.length == idKeys.length){
+                        res.send(200, resolveKeys)
+                    }
+                })
+            }else{
+                res.send(200, resolveKeys)
+            }
     })
 }
 

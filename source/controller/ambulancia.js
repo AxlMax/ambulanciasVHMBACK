@@ -5,18 +5,11 @@ const Error = require('../utils/error/errorHandler')
 
 const ErrorMSG = "error CONTROLADOR"
 
-const Cambulancia = (body, res) => {
-    const ambulancia =  new ambulanciaModel(body)
-
-    try{
-        ambulancia.save()
-        .then (() => res.status(200).send(ambulancia))
-        .catch((error) => res.status(500).send(error))
-
-    }catch{
-        res.status(400).send("error CONTROLADOR")
-    }
-}
+const Cambulancia = (body, res) => auto.create({
+    "model" : ambulanciaModel,
+    body,
+    res
+})
 
 const RambulanciabyId = (id, res) => {
     
