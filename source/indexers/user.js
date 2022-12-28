@@ -30,6 +30,10 @@ indexUser = [
     {
         method : "get",
         service : "RambulanciasByuser"
+    },
+    {
+        method: "patch",
+        service: "LinkGpsUser"
     }
 ]
 

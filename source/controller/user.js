@@ -93,8 +93,15 @@ const RambulanciasByuser = (idc, res) => auto.Rlink({
     res
 })
 
+const LinkGpsUser = (idc, idl, res) => auto.Link({
+    "model" : userModel,
+    idc, idl,
+    "key" : "id_gps",
+    res
+})
+
 module.exports = {
     Cuser, Ruser, Uuser, Duser, 
     AddRolUser, RroutsUser, LinkAmbulancia,
-    RambulanciasByuser
+    RambulanciasByuser, LinkGpsUser
 }

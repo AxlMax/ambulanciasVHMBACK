@@ -34,7 +34,10 @@ const LinkAmbulancia = (req, res) => controllerUser.LinkAmbulancia(request.Query
 
 const RambulanciasByuser = (req, res) => controllerUser.RambulanciasByuser(request.Query(req,'idc'), res)
 
+const LinkGpsUser = (req, res) => controllerUser.LinkGpsUser(request.Query(req,'idc'), request.Query(req,'idl'), res)
+
 module.exports = {
     Cuser, Ruser, Uuser, Duser, AddRolUser, 
-    RroutsUser, LinkAmbulancia, RambulanciasByuser
+    RroutsUser, LinkAmbulancia, RambulanciasByuser,
+    LinkGpsUser
 }

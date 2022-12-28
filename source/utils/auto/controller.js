@@ -1,4 +1,4 @@
-const { model } = require('mongoose')
+const { model, Schema } = require('mongoose')
 const Error = require('../error/errorHandler')
 const ERRORMSG = "error CONTROLADOR"
 
@@ -29,6 +29,14 @@ const Update = (args) => {
         }
     })
 }
+/**
+ * 
+ * @param {*} args
+ * @param {mongoose.Schema.model} model es el modelo que realizara las operaciones a la base de datos
+ * @param {string} id es el id del registro dentro de la base de datos
+ * @param {string} key como se encuentra regsitrada la id en los registros relacionados ejemplo id_gps para gps dentro de user
+ * @param {string} msg mensaje de finalizacion   
+ */
 
 const Delete = (args) => {
     const {model, id, res, key,msg} = args
@@ -36,7 +44,7 @@ const Delete = (args) => {
     if(process.env.LOG == 'true'){
         console.log(`Delete ${id} ${key}`)
     }
-    
+
     model.findById(id, (error, doc) => {
         doc['relation'].map((value, index) => {
             const relationModel = require(`../../models/${value}`)
@@ -78,14 +86,14 @@ const Delete = (args) => {
 
                     })
 
-                    model.findByIdAndDelete(id, (err, doc) => Error.errorHandler(err, res, ERRORMSG, msg))
-                }else{
-                    model.findByIdAndDelete(id, (err, doc) => Error.errorHandler(err, res, ERRORMSG, msg)) 
+                    
                 }
             })
         })
-    })
+
+    model.findByIdAndDelete(id, (err, doc) => Error.errorHandler(err, res, ERRORMSG, msg))
     
+    })
 }
 
 /**
@@ -104,8 +112,9 @@ const Link = (args) => {
     if(process.env.LOG == 'true'){
         console.log(`Link ${idc} ${key}`)
     }
-    
+   
     model.findById(idc, (error, doc) => {
+        
         doc?.[key].push(idl)
         Error.errorSaving(doc, res)
     })

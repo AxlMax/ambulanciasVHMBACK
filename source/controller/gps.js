@@ -25,6 +25,7 @@ const Dgps = (id, res) => auto.Delete({
     "model" : gpsModel,
     id,
     res,
+    "key" : "id_gps",
     "msg" : "gps eliminado"
 })
 
